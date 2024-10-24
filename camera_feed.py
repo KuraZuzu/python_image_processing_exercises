@@ -1,10 +1,10 @@
-import cv2
 import sys
+import cv2
 
-camera_id = int(sys.argv[1])
-print(camera_id)
+args = sys.argv
+camera_id = int(args[1])
 
-cap = cv2.VideoCapture(camera_id)  # カメラデバイスの0番目を指定 "0" -> "/dev/video0"
+cap = cv2.VideoCapture(camera_id)  # カメラデバイスの0番目を指定
 while True:
     ret, frame = cap.read()
     if not ret:  # フレーム取得ができなかったとき
