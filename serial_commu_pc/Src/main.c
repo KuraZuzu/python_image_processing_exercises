@@ -60,6 +60,24 @@ void SystemClock_Config(void);
 
 /* データ送信用バッファ */
 char tx_buffer[128];
+<<<<<<< HEAD
+=======
+uint8_t rx_data[20];
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  if (huart->Instance == USART2)
+  {
+    // 受信データを処理する
+    // ここでは例として受信データをそのまま送信
+    HAL_UART_Transmit(&huart2, rx_data, sizeof(rx_data), 10);
+
+    // 受信割り込みを再度有効化
+    HAL_UART_Receive_IT(&huart2, rx_data, sizeof(rx_data));
+  }
+}
+
+>>>>>>> 25bcb38 (基本プログラム更新)
 /* USER CODE END 0 */
 
 /**
@@ -121,11 +139,23 @@ int main(void)
                  flags,
                  reserved);
 
+<<<<<<< HEAD
     /* データを送信 */
     HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 10);
     HAL_UART_Receive(&huart2, (uint8_t *)rx_buffer, strlen(rx_buffer), 10);
     /* 500ミリ秒待機 */
     HAL_Delay(10);
+=======
+    // データを送信
+    // HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 1000);
+    HAL_UART_Receive_IT(&huart2, rx_data, sizeof(rx_data));  // 受信割り込みを有効化
+    printf("\r\n");
+
+    // 500ミリ秒待機
+    HAL_Delay(10);
+    /* USER CODE END WHILE */
+
+>>>>>>> 25bcb38 (基本プログラム更新)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

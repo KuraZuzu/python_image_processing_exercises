@@ -16,7 +16,6 @@ try:
     while True:
         # メッセージをバイト型にエンコードして送信
         ser.write(message.encode())
-        print("Message sent:", message)
 
         # データ送信後、少し待つ
         time.sleep(2)  # 2秒ごとにメッセージを送信
@@ -24,7 +23,7 @@ try:
         # エコーバックされたデータの読み取り（オプション）
         while ser.in_waiting > 0:
             received_data = ser.read(ser.in_waiting)
-            print("Received:", received_data.decode())
+            print("Received:", received_data.decode("utf-8"))
 
 except KeyboardInterrupt:
     # Ctrl+Cが押された場合はループを終了
