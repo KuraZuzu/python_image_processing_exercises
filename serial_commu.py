@@ -3,9 +3,10 @@ from time import sleep
 from dataclasses import dataclass
 
 # 定数として必要な情報を定義
-PORT = '/dev/ttyUSB0'  # シリアルポートのデバイス名
+PORT = '/dev/ttyACM0'  # シリアルポートのデバイス名
 BAUDRATE = 115200      # ボーレート
 TIMEOUT = 1.0          # タイムアウト時間（秒）
+
 
 @dataclass
 class RobotState:
@@ -17,6 +18,7 @@ class RobotState:
     camera_id: int = 0            # カメラID
     flag: int = 0                 # フラグ
     reserved: int = 0             # 予備
+
 
 def main():
     try:

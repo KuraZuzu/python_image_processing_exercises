@@ -60,6 +60,9 @@ void SystemClock_Config(void);
 
 /* データ送信用バッファ */
 char tx_buffer[128];
+/* データ受信用バッファ */
+char rx_buffer[128];
+
 /* USER CODE END 0 */
 
 /**
@@ -102,32 +105,34 @@ int main(void)
   while (1)
   {
     /* 送信データの作成 */
-    int state_id = 0;
-    int ready_to_fire = 1;
-    int pitch_deg = 250;         // 1/10度単位（45.0度）
-    int muzzle_velocity = 151; // mm/s（15.0 m/s）
-    int record_video = 1;
-    int reboot_pc = 0;
-    int num_disks = 59;
-    int video_id = 121;
+    int state_id = 1;
+    int pitch_deg = 120;         // 1/10度単位（45.0度）
+    int muzzle_velocity = 154; // mm/s（15.0 m/s）
+    int left_disks_num = 53;
+    int right_disks_num = 25;
+    int video_id = 0;
+    int flags = 1;
+    int reserved = 0;
+
 
     /* データをフォーマットしてバッファに格納 */
     snprintf(tx_buffer, sizeof(tx_buffer),
              "%d,%d,%d,%d,%d,%d,%d,%d\n",
              state_id,
-             ready_to_fire,
              pitch_deg,
              muzzle_velocity,
-             record_video,
-             reboot_pc,
-             num_disks,
-             video_id);
+             left_disks_num,
+             right_disks_num,
+             video_id,
+             flags,
+             reserved);
 
     /* データを送信 */
-    HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 10);
+    HAL_UART_Receive(&huart2, (uint8_t *)rx_buffer, strlen(rx_buffer), 10);
 
     /* 500ミリ秒待機 */
-    HAL_Delay(500);
+    HAL_Delay(10);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
