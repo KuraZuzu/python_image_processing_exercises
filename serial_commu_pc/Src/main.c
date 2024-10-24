@@ -130,7 +130,6 @@ int main(void)
     /* データを送信 */
     HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 10);
     HAL_UART_Receive(&huart2, (uint8_t *)rx_buffer, strlen(rx_buffer), 10);
-
     /* 500ミリ秒待機 */
     HAL_Delay(10);
     /* USER CODE BEGIN 3 */
