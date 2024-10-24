@@ -60,9 +60,6 @@ void SystemClock_Config(void);
 
 /* データ送信用バッファ */
 char tx_buffer[128];
-/* データ受信用バッファ */
-char rx_buffer[128];
-
 /* USER CODE END 0 */
 
 /**
@@ -100,13 +97,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-
   while (1)
   {
-    /* 送信データの作成 */
+    // 送信データの作成
     int state_id = 1;
-    int pitch_deg = 120;         // 1/10度単位（45.0度）
+    int pitch_deg = 120;       // 1/10度単位（45.0度）
     int muzzle_velocity = 154; // mm/s（15.0 m/s）
     int left_disks_num = 53;
     int right_disks_num = 25;
@@ -114,18 +109,17 @@ int main(void)
     int flags = 1;
     int reserved = 0;
 
-
-    /* データをフォーマットしてバッファに格納 */
-    snprintf(tx_buffer, sizeof(tx_buffer),
-             "%d,%d,%d,%d,%d,%d,%d,%d\n",
-             state_id,
-             pitch_deg,
-             muzzle_velocity,
-             left_disks_num,
-             right_disks_num,
-             video_id,
-             flags,
-             reserved);
+    // データをフォーマットしてバッファに格納 /
+        snprintf(tx_buffer, sizeof(tx_buffer),
+                 "%d,%d,%d,%d,%d,%d,%d,%d\n",
+                 state_id,
+                 pitch_deg,
+                 muzzle_velocity,
+                 left_disks_num,
+                 right_disks_num,
+                 video_id,
+                 flags,
+                 reserved);
 
     /* データを送信 */
     HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 10);

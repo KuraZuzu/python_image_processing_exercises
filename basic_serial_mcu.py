@@ -44,6 +44,8 @@ def main():
         while True:
             # 改行コードまでデータを読み取る
             buffer = ser.readline()
+            send_msg = "540,360,0,0\n"
+            ser.write(send_msg.encode())
             if not buffer:
                 continue  # タイムアウトの場合は次のループへ
 

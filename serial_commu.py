@@ -27,7 +27,6 @@ def main():
             port=PORT,
             baudrate=BAUDRATE,
             parity=serial.PARITY_NONE,
-            # parity=serial.PARITY_EVEN,
             timeout=TIMEOUT,
         )
         print(f"Opened serial port: {PORT}")
@@ -39,6 +38,7 @@ def main():
         while True:
             # 改行コードまでデータを読み取る
             buffer = ser.readline()
+
             if not buffer:
                 continue  # タイムアウトの場合は次のループへ
 
@@ -77,6 +77,12 @@ def main():
                 print(f"フラグ: {robot_state.flag}")
                 print(f"予備: {robot_state.reserved}")
                 print("----------------------------")
+
+                # マイコンにデータを送信
+                send_message = "987,654,0,0\n"
+                ser.write(send_message.encode())  # 文字列をエンコードして送信
+                print(f"Sent to microcontroller: {send_message}")
+
             except (ValueError, IndexError) as err:
                 print(f"Parsing error: {err}")
                 continue
