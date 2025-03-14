@@ -137,11 +137,11 @@ int main(void)
                  reserved);
 
     // データを送信
-    // HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 1000);
-    HAL_UART_Receive_IT(&huart2, rx_data, sizeof(rx_data));  // 受信割り込みを有効化
+    HAL_UART_Transmit(&huart2, (uint8_t *)tx_buffer, strlen(tx_buffer), 1000);  // データを送信
+    // HAL_UART_Receive_IT(&huart2, rx_data, sizeof(rx_data));  // 受信割り込みを有効化して受信したデータをエコーバック
     printf("\r\n");
 
-    // 500ミリ秒待機
+    // 10ミリ秒待機
     HAL_Delay(10);
     /* USER CODE END WHILE */
 
